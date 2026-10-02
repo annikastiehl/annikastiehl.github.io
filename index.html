@@ -4,128 +4,260 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Annika Stiehl</title>
-<meta name="description" content="Annika Stiehl – PhD student in signal processing and deep learning for EEG analysis at Ansbach University of Applied Sciences.">
+<meta name="description" content="Annika Stiehl, PhD student in signal processing and deep learning for EEG analysis at Ansbach University of Applied Sciences.">
 <style>
-  :root { --bg: #fff; --fg: #222; --muted: #666; --accent: #1f5c73; --line: #e3e3e3; }
+  :root {
+    --bg: #f8f7f3; --card: #fff; --fg: #1d2327; --muted: #5f6b72; --line: #e4e1d9;
+    --accent: #1f5c73; --accent-soft: #e3eef2;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  }
   @media (prefers-color-scheme: dark) {
-    :root { --bg: #15181a; --fg: #e6e6e6; --muted: #9aa0a4; --accent: #6fb3cc; --line: #2c3134; }
+    :root { --bg: #101417; --card: #171d21; --fg: #e3e8ea; --muted: #97a3aa; --line: #263137;
+            --accent: #7cc0d6; --accent-soft: #1c2e36; }
   }
   * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 4.5rem; }
   body { margin: 0; background: var(--bg); color: var(--fg);
-         font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
-  main { max-width: 760px; margin: 0 auto; padding: 48px 16px 64px; }
-  h1 { margin: 0; font-size: 2.2rem; color: var(--accent); }
-  h2 { margin: 2.5rem 0 1rem; font-size: 1.15rem; text-transform: uppercase; letter-spacing: .06em;
-       color: var(--accent); border-bottom: 1px solid var(--line); padding-bottom: .3rem; }
-  h3 { margin: 1.6rem 0 .8rem; font-size: 1rem; }
-  a { color: var(--accent); }
-  nav { margin: .8rem 0 0; display: flex; flex-wrap: wrap; gap: .4rem 1.2rem; }
-  .sub { margin: .2rem 0 0; color: var(--muted); }
-  ul { padding-left: 1.2rem; }
-  li { margin-bottom: .6rem; }
-  .pubs li { margin-bottom: .9rem; }
-  .venue { color: var(--muted); }
-  .entry { display: grid; grid-template-columns: 7.5rem 1fr; gap: 0 1rem; margin-bottom: 1rem; }
-  .entry .when { color: var(--muted); }
-  .entry p { margin: 0; }
-  @media (max-width: 520px) { .entry { grid-template-columns: 1fr; } }
-  footer { margin-top: 3rem; color: var(--muted); font-size: .85rem; }
+         font: 16px/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 16px; }
+
+  /* top bar */
+  .top { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 85%, transparent);
+         backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+  .top .wrap { display: flex; align-items: center; justify-content: space-between; height: 3.5rem; gap: 1rem; }
+  .top .brand { font-family: var(--serif); font-size: 1.15rem; color: var(--fg); text-decoration: none; }
+  .top nav { display: flex; gap: 1.2rem; }
+  .top nav a { color: var(--muted); text-decoration: none; font-size: .92rem; }
+  .top nav a:hover { color: var(--accent); }
+  @media (max-width: 560px) { .top .brand { display: none; } .top nav { width: 100%; justify-content: space-between; } }
+
+  /* hero */
+  .hero { display: grid; grid-template-columns: 200px 1fr; gap: 2.5rem; align-items: center; padding: 4rem 0 3rem; }
+  .hero img { width: 200px; height: 200px; border-radius: 50%; object-fit: cover;
+              border: 4px solid var(--card); box-shadow: 0 0 0 2px var(--accent), 0 10px 30px rgba(0,0,0,.12); }
+  .hero h1 { margin: 0; font-family: var(--serif); font-weight: 600; font-size: clamp(2.2rem, 6vw, 3.2rem); line-height: 1.1; }
+  .hero .role { margin: .5rem 0 0; font-size: 1.1rem; }
+  .hero .aff { margin: .15rem 0 0; color: var(--muted); }
+  .links { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.3rem; }
+  .btn { display: inline-block; padding: .4rem 1rem; border-radius: 999px; border: 1px solid var(--accent);
+         color: var(--accent); text-decoration: none; font-size: .9rem; font-weight: 500; }
+  .btn:hover, .btn.primary { background: var(--accent); color: var(--card); }
+  @media (max-width: 640px) {
+    .hero { grid-template-columns: 1fr; text-align: center; gap: 1.5rem; padding-top: 2.5rem; }
+    .hero img { margin: 0 auto; width: 160px; height: 160px; }
+    .links, .chips { justify-content: center; }
+  }
+
+  /* sections */
+  section { padding: 2.5rem 0; border-top: 1px solid var(--line); }
+  h2 { margin: 0 0 1.5rem; font-family: var(--serif); font-weight: 600; font-size: 1.7rem; }
+  h2::after { content: ""; display: block; width: 2.5rem; height: 3px; margin-top: .4rem; background: var(--accent); border-radius: 2px; }
+  h3 { margin: 0 0 1rem; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .chips { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: 1.2rem; padding: 0; list-style: none; }
+  .chips li { background: var(--accent-soft); color: var(--accent); padding: .2rem .75rem; border-radius: 999px; font-size: .85rem; }
+
+  /* publications */
+  .year { display: grid; grid-template-columns: 4.5rem 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+  .year > span { font-family: var(--serif); font-size: 1.4rem; color: var(--muted); line-height: 1.3; }
+  .pub { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 1rem 1.2rem; margin-bottom: .75rem; }
+  .pub .t { margin: 0; font-family: var(--serif); font-size: 1.08rem; font-weight: 600; line-height: 1.35; }
+  .pub .a { margin: .35rem 0 0; color: var(--muted); font-size: .93rem; }
+  .pub .a b { color: var(--fg); }
+  .pub .v { margin: .25rem 0 0; color: var(--accent); font-size: .9rem; }
+  .pub .tag { display: inline-block; margin: .5rem .4rem 0 0; padding: .05rem .6rem; border: 1px solid var(--line);
+              border-radius: 6px; font-size: .78rem; text-decoration: none; }
+  .pub .tag:hover { border-color: var(--accent); }
+  @media (max-width: 560px) { .year { grid-template-columns: 1fr; gap: .3rem; } }
+
+  /* timelines */
+  .tl { list-style: none; margin: 0; padding: 0 0 0 1.4rem; border-left: 2px solid var(--line); }
+  .tl li { position: relative; margin-bottom: 1.3rem; }
+  .tl li::before { content: ""; position: absolute; left: calc(-1.4rem - 7px); top: .45rem; width: 12px; height: 12px;
+                   border-radius: 50%; background: var(--bg); border: 2px solid var(--accent); }
+  .tl .d { font-size: .8rem; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--accent); }
+  .tl p { margin: .1rem 0 0; }
+  .tl .s { color: var(--muted); font-size: .93rem; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+  @media (max-width: 700px) { .cols { grid-template-columns: 1fr; gap: 1rem; } }
+  .awards { margin: 1.5rem 0 0; padding-left: 1.2rem; }
+  .awards li { margin-bottom: .5rem; }
+
+  footer { border-top: 1px solid var(--line); padding: 2rem 0 3rem; color: var(--muted); font-size: .85rem; }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem; }
+  footer a { color: var(--muted); }
 </style>
 </head>
 <body>
-<main>
 
-<header>
-  <h1>Annika Stiehl</h1>
-  <p class="sub">PhD Student · Center for Signal Analysis of Complex Systems (CCS) · Ansbach University of Applied Sciences</p>
-  <nav>
-    <a href="mailto:annika.stiehl@hs-ansbach.de">Email</a>
-    <a href="https://scholar.google.com/citations?user=kN9aH00AAAAJ">Google Scholar</a>
-    <a href="https://github.com/annikastiehl">GitHub</a>
-    <a href="https://de.linkedin.com/in/annika-stiehl">LinkedIn</a>
-  </nav>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#">Annika Stiehl</a>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#publications">Publications</a>
+      <a href="#talks">Talks</a>
+      <a href="#cv">CV</a>
+    </nav>
+  </div>
 </header>
+
+<main class="wrap">
+
+<div class="hero">
+  <img src="photo.jpg" alt="Portrait of Annika Stiehl" width="200" height="200">
+  <div>
+    <h1>Annika Stiehl</h1>
+    <p class="role">PhD Student in Signal Processing &amp; Deep Learning</p>
+    <p class="aff">Center for Signal Analysis of Complex Systems (CCS) · Ansbach University of Applied Sciences</p>
+    <div class="links">
+      <a class="btn primary" href="mailto:annika.stiehl@hs-ansbach.de">Email</a>
+      <a class="btn" href="https://scholar.google.com/citations?user=kN9aH00AAAAJ">Google Scholar</a>
+      <a class="btn" href="https://github.com/annikastiehl">GitHub</a>
+      <a class="btn" href="https://de.linkedin.com/in/annika-stiehl">LinkedIn</a>
+    </div>
+  </div>
+</div>
 
 <section id="about">
   <h2>About</h2>
-  <p>I am a PhD student in signal processing and deep learning at Ansbach University of Applied Sciences, Germany.
+  <p>I am a PhD student in signal processing and deep learning at Ansbach University of Applied Sciences, Germany,
+  working in the research projects <a href="https://forschung.hs-ansbach.de/forschungsprojekt/128-deep-eeg">DEEP-EEG</a>
+  and <a href="https://forschung.hs-ansbach.de/de/forschungsprojekt/32-dyca">DyCA</a>.
   My research focuses on deep learning for EEG analysis, in particular automated epileptic seizure detection,
-  interictal epileptiform discharge detection, low-density EEG setups and dimension reduction methods such as
-  Dynamical Component Analysis (DyCA).</p>
+  the detection of interictal epileptiform discharges, low-density EEG setups and dimension reduction methods
+  such as Dynamical Component Analysis (DyCA).</p>
   <p>In 2025 I spent a DAAD-funded research stay at the Institut de Neurosciences des Systèmes (Aix-Marseille Université),
-  working with The Virtual Brain. I also teach courses on computer science and an introduction to artificial intelligence.</p>
+  working with The Virtual Brain. I also teach computer science and an introduction to artificial intelligence.</p>
+  <ul class="chips">
+    <li>EEG analysis</li><li>Seizure detection</li><li>Deep learning</li>
+    <li>Dimension reduction</li><li>DyCA</li><li>Topological data analysis</li>
+  </ul>
 </section>
 
 <section id="publications">
   <h2>Publications</h2>
-  <ul class="pubs">
-    <li><b>A. Stiehl</b>, V. Kagade, N. Weeger, N. Ille, S. Geißelsöder and C. Uhl,
-      “Comparison of Dimension Reduction Methods for EEG Seizure Detection Using Autonomous AI-Driven Optimization,”
-      <span class="venue">BMT, 2026.</span></li>
-    <li><b>A. Stiehl</b>, P. Wingert, N. Weeger, N. Ille, C. Uhl and S. Geißelsöder,
-      “Low-Density EEG for Seizure Detection: Evaluating CNN-RNN Architectures on a Behind-the-Ear Montage Setup,”
-      <span class="venue">European Signal Processing Conference (EUSIPCO), Bruges, Belgium, 2026.</span></li>
-    <li><b>A. Stiehl</b>, N. Weeger, C. Uhl, D. Bechtold, N. Ille and S. Geißelsöder,
-      “Towards Automated EEG-Based Epilepsy Detection Using Deep Convolutional Autoencoders,”
-      <span class="venue">47th Annual International Conference of the IEEE EMBC, Copenhagen, Denmark, 2025.</span></li>
-    <li><b>A. Stiehl</b>, N. Weeger and C. Uhl,
-      “Comparison of Mode Selection and Reconstructions Obtained by DyCA and DMD with Respect to Noise Robustness and Sampling,”
-      <span class="venue">CONTROLO 2024, Springer Nature Switzerland, pp. 247–257, Porto, Portugal, 2024.</span></li>
-    <li>C. Uhl, <b>A. Stiehl</b>, N. Weeger, M. Schlarb and K. Hüper,
-      “Disentangling Dynamic and Stochastic Modes in Multivariate Time Series,”
-      <span class="venue">Frontiers in Applied Mathematics and Statistics, 2024.</span></li>
-    <li><b>A. Stiehl</b> et al.,
-      “Signal Analysis and Classification of Interictal Epileptiform Discharges from EEG with Machine Learning,”
-      <span class="venue">BMT, 2023.</span></li>
-    <li><b>A. Stiehl</b>, M. Flammer, F. Anselstetter, N. Ille, H. Bornfleth, S. Geißelsöder and C. Uhl,
-      “Topological Analysis of Low Dimensional Phase Space Trajectories of High Dimensional EEG Signals for Classification of Interictal Epileptiform Discharges,”
-      <span class="venue">IEEE ICASSP Workshops, Rhodes, Greece, 2023.</span></li>
-    <li><b>A. Stiehl</b> et al.,
-      “Different Montages and Dimension Reduction Methods for EEG Signal Analysis of Interictal Epileptic Discharges,”
-      <span class="venue">BMT (abstract), 2022.</span></li>
-    <li><b>A. Stiehl</b>, S. Geißelsöder, N. Ille, F. Anselstetter, H. Bornfleth and C. Uhl,
-      “Dimension Reduction Methods, Persistent Homology and Machine Learning for EEG Signal Analysis of Interictal Epileptic Discharges,”
-      <span class="venue">Workshop Biosignale, Dresden, Germany, 2022; arXiv, 2025.</span></li>
-  </ul>
+
+  <div class="year"><span>2026</span><div>
+    <article class="pub">
+      <p class="t">Comparison of Dimension Reduction Methods for EEG Seizure Detection Using Autonomous AI-Driven Optimization</p>
+      <p class="a"><b>A. Stiehl</b>, V. Kagade, N. Weeger, N. Ille, S. Geißelsöder, C. Uhl</p>
+      <p class="v">BMT 2026, Augsburg, Germany · Oct 2026</p>
+    </article>
+    <article class="pub">
+      <p class="t">Low-Density EEG for Seizure Detection: Evaluating CNN-RNN Architectures on a Behind-the-Ear Montage Setup</p>
+      <p class="a"><b>A. Stiehl</b>, P. Wingert, N. Weeger, N. Ille, C. Uhl, S. Geißelsöder</p>
+      <p class="v">European Signal Processing Conference (EUSIPCO), Bruges, Belgium · Aug/Sep 2026</p>
+    </article>
+  </div></div>
+
+  <div class="year"><span>2025</span><div>
+    <article class="pub">
+      <p class="t">Towards Automated EEG-Based Epilepsy Detection Using Deep Convolutional Autoencoders</p>
+      <p class="a"><b>A. Stiehl</b>, N. Weeger, C. Uhl, D. Bechtold, N. Ille, S. Geißelsöder</p>
+      <p class="v">47th Annual International Conference of the IEEE EMBC, Copenhagen, Denmark · Jul 2025</p>
+    </article>
+  </div></div>
+
+  <div class="year"><span>2024</span><div>
+    <article class="pub">
+      <p class="t">Disentangling Dynamic and Stochastic Modes in Multivariate Time Series</p>
+      <p class="a">C. Uhl, <b>A. Stiehl</b>, N. Weeger, M. Schlarb, K. Hüper</p>
+      <p class="v">Frontiers in Applied Mathematics and Statistics · Oct 2024</p>
+      <a class="tag" href="https://doi.org/10.3389/fams.2024.1456635">DOI</a>
+    </article>
+    <article class="pub">
+      <p class="t">Comparison of Mode Selection and Reconstructions Obtained by DyCA and DMD with Respect to Noise Robustness and Sampling</p>
+      <p class="a"><b>A. Stiehl</b>, N. Weeger, C. Uhl</p>
+      <p class="v">CONTROLO 2024, Porto, Portugal · Jul 2024 · Springer, pp. 247-257</p>
+      <a class="tag" href="https://link.springer.com/book/9783031817236">Proceedings</a>
+    </article>
+  </div></div>
+
+  <div class="year"><span>2023</span><div>
+    <article class="pub">
+      <p class="t">Signal Analysis and Classification of Interictal Epileptiform Discharges from EEG with Machine Learning</p>
+      <p class="a"><b>A. Stiehl</b> et al.</p>
+      <p class="v">BMT 2023, Duisburg, Germany · Sep 2023</p>
+    </article>
+    <article class="pub">
+      <p class="t">Topological Analysis of Low Dimensional Phase Space Trajectories of High Dimensional EEG Signals for Classification of Interictal Epileptiform Discharges</p>
+      <p class="a"><b>A. Stiehl</b>, M. Flammer, F. Anselstetter, N. Ille, H. Bornfleth, S. Geißelsöder, C. Uhl</p>
+      <p class="v">IEEE ICASSP Workshops, Rhodes, Greece · Jun 2023</p>
+    </article>
+  </div></div>
+
+  <div class="year"><span>2022</span><div>
+    <article class="pub">
+      <p class="t">Different Montages and Dimension Reduction Methods for EEG Signal Analysis of Interictal Epileptic Discharges</p>
+      <p class="a"><b>A. Stiehl</b> et al.</p>
+      <p class="v">BMT 2022 (abstract), Innsbruck, Austria · Sep 2022</p>
+    </article>
+    <article class="pub">
+      <p class="t">Dimension Reduction Methods, Persistent Homology and Machine Learning for EEG Signal Analysis of Interictal Epileptic Discharges</p>
+      <p class="a"><b>A. Stiehl</b>, S. Geißelsöder, N. Ille, F. Anselstetter, H. Bornfleth, C. Uhl</p>
+      <p class="v">Workshop Biosignale, Dresden, Germany · Aug 2022</p>
+      <a class="tag" href="https://arxiv.org/abs/2502.12814">arXiv (Feb 2025)</a>
+    </article>
+  </div></div>
+
   <p>Full list on <a href="https://scholar.google.com/citations?user=kN9aH00AAAAJ">Google Scholar</a>.</p>
 </section>
 
 <section id="talks">
   <h2>Talks &amp; Posters</h2>
-  <div class="entry"><span class="when">2026</span><p>Low-density EEG for seizure detection — <span class="venue">EUSIPCO, Bruges, Belgium</span></p></div>
-  <div class="entry"><span class="when">2026</span><p>Dimension reduction methods for EEG seizure detection — <span class="venue">BMT</span></p></div>
-  <div class="entry"><span class="when">Jun 2026</span><p>EEG analysis with deep learning (poster) — <span class="venue">Wissenschaftscafé</span></p></div>
-  <div class="entry"><span class="when">2025</span><p>EEG-based epilepsy detection using deep convolutional autoencoders — <span class="venue">IEEE EMBC, Copenhagen, Denmark</span></p></div>
-  <div class="entry"><span class="when">2024</span><p>DyCA and DMD: mode selection and noise robustness — <span class="venue">CONTROLO, Porto, Portugal</span></p></div>
-  <div class="entry"><span class="when">2023</span><p>Signal analysis and classification of interictal epileptiform discharges from EEG — <span class="venue">BMT</span></p></div>
-  <div class="entry"><span class="when">2023</span><p>Topological analysis of phase space trajectories of EEG signals — <span class="venue">IEEE ICASSP Workshops, Rhodes, Greece</span></p></div>
-  <div class="entry"><span class="when">2022</span><p>Dimension reduction, persistent homology and machine learning for EEG — <span class="venue">Workshop Biosignale, Dresden, Germany</span></p></div>
+  <ul class="tl">
+    <li><span class="d">Oct 2026</span><p>Dimension reduction methods for EEG seizure detection</p><p class="s">BMT 2026, Augsburg, Germany</p></li>
+    <li><span class="d">Aug/Sep 2026</span><p>Low-density EEG for seizure detection</p><p class="s">EUSIPCO 2026, Bruges, Belgium</p></li>
+    <li><span class="d">Jun 2026</span><p>EEG analysis with deep learning (poster)</p><p class="s">Wissenschaftscafé</p></li>
+    <li><span class="d">Jul 2025</span><p>EEG-based epilepsy detection using deep convolutional autoencoders</p><p class="s">IEEE EMBC 2025, Copenhagen, Denmark</p></li>
+    <li><span class="d">Jul 2024</span><p>DyCA and DMD: mode selection and noise robustness</p><p class="s">CONTROLO 2024, Porto, Portugal</p></li>
+    <li><span class="d">Sep 2023</span><p>Signal analysis and classification of interictal epileptiform discharges from EEG</p><p class="s">BMT 2023, Duisburg, Germany</p></li>
+    <li><span class="d">Jun 2023</span><p>Topological analysis of phase space trajectories of EEG signals</p><p class="s">IEEE ICASSP Workshops, Rhodes, Greece</p></li>
+    <li><span class="d">Aug 2022</span><p>Dimension reduction, persistent homology and machine learning for EEG</p><p class="s">Workshop Biosignale, Dresden, Germany</p></li>
+  </ul>
 </section>
 
 <section id="cv">
   <h2>CV</h2>
-  <h3>Education</h3>
-  <div class="entry"><span class="when">2024 – now</span><p><b>PhD, Signal Processing &amp; Deep Learning</b><br>Ansbach University of Applied Sciences — Deep learning for EEG analysis</p></div>
-  <div class="entry"><span class="when">2021 – 2023</span><p><b>M.Sc. Applied Research in Engineering Sciences</b><br>Ansbach University of Applied Sciences — Thesis: machine learning detection of interictal epileptiform discharges</p></div>
-  <div class="entry"><span class="when">2018 – 2021</span><p><b>B.Eng. Electrical Engineering</b><br>DHBW Stuttgart &amp; Robert Bosch GmbH — Thesis: digital twin of a CNC system for fused deposition modeling</p></div>
+  <div class="cols">
+    <div>
+      <h3>Education</h3>
+      <ul class="tl">
+        <li><span class="d">Since 2024</span><p><b>PhD, Signal Processing &amp; Deep Learning</b></p><p class="s">Ansbach University of Applied Sciences · Deep learning for EEG analysis</p></li>
+        <li><span class="d">2021-2023</span><p><b>M.Sc. Applied Research in Engineering Sciences</b></p><p class="s">Ansbach University of Applied Sciences · Thesis on machine learning detection of interictal epileptiform discharges</p></li>
+        <li><span class="d">2018-2021</span><p><b>B.Eng. Electrical Engineering</b></p><p class="s">DHBW Stuttgart &amp; Robert Bosch GmbH · Thesis on a digital twin of a CNC system for fused deposition modeling</p></li>
+      </ul>
+    </div>
+    <div>
+      <h3>Experience</h3>
+      <ul class="tl">
+        <li><span class="d">Since 2023</span><p><b>PhD Student, CCS</b></p><p class="s">Ansbach University of Applied Sciences · Deep learning for seizure detection, EEG preprocessing, supervision of student theses</p></li>
+        <li><span class="d">Oct-Nov 2025</span><p><b>Research Stay</b></p><p class="s">Institut de Neurosciences des Systèmes, Aix-Marseille Université · The Virtual Brain</p></li>
+        <li><span class="d">Since 2023</span><p><b>Lecturer</b></p><p class="s">Ansbach University of Applied Sciences · Computer Science, Introduction to Artificial Intelligence</p></li>
+        <li><span class="d">2023-2024</span><p><b>Research Assistant</b></p><p class="s">Ansbach University of Applied Sciences · AI-based microscopy image analysis for antibiotic production</p></li>
+        <li><span class="d">2018-2021</span><p><b>Dual Student</b></p><p class="s">Robert Bosch GmbH, Stuttgart</p></li>
+      </ul>
+    </div>
+  </div>
 
-  <h3>Experience</h3>
-  <div class="entry"><span class="when">2023 – now</span><p><b>PhD Student, CCS</b><br>Ansbach University of Applied Sciences — deep learning for seizure detection, EEG preprocessing pipelines, supervision of student theses</p></div>
-  <div class="entry"><span class="when">Oct – Nov 2025</span><p><b>Research Stay</b><br>Institut de Neurosciences des Systèmes, Aix-Marseille Université — The Virtual Brain</p></div>
-  <div class="entry"><span class="when">2023 – now</span><p><b>Lecturer</b><br>Ansbach University of Applied Sciences — Computer Science; Introduction to Artificial Intelligence</p></div>
-  <div class="entry"><span class="when">2023 – 2024</span><p><b>Research Assistant</b><br>Ansbach University of Applied Sciences — AI-based microscopy image analysis for antibiotic production</p></div>
-  <div class="entry"><span class="when">2018 – 2021</span><p><b>Dual Student</b><br>Robert Bosch GmbH, Stuttgart</p></div>
-
-  <h3>Awards &amp; Service</h3>
-  <ul>
+  <h3 style="margin-top:1.5rem">Awards &amp; Service</h3>
+  <ul class="awards">
     <li>Co-organizer of the DGBMT “Junges Forum” at BMT 2026</li>
     <li>DAAD scholarship for a research stay at Aix-Marseille Université (2025)</li>
     <li>VDI Master’s Thesis Award for the best master’s thesis at Ansbach University of Applied Sciences (2023)</li>
-    <li>Fraunhofer “Talent Take Off” and VDI TecStatt Stuttgart: technical workshops for school and university students</li>
+    <li>Fraunhofer “Talent Take Off” (2018-2025) and VDI TecStatt Stuttgart (2019-2021): technical workshops for school and university students</li>
   </ul>
 </section>
 
-<footer>© 2026 Annika Stiehl</footer>
 </main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Annika Stiehl</span>
+    <span>Photo: © <a href="https://www.hs-ansbach.de/personen/stiehl-annika">Hochschule Ansbach</a></span>
+  </div>
+</footer>
+
 </body>
 </html>
